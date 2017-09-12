@@ -1,0 +1,32 @@
+What are expression trees?
+
+- We know what lambda functions are
+    - Fancy looking functions
+    - Shorthand
+    - Very convenient
+
+- Main difference
+    - A lambda does the action
+    - Expression trees describe the lambda that does the action
+
+Using a function that converts a string to upper case as an example
+
+- Func<string, string> vs Expression<Func<string, string>>
+    - Func does the thing
+    - Expression trees are the breakdown of what that function does
+
+- ExpressionVisitor
+
+- Real world examples
+    - Entity Framework - translating queries to SQL
+    - AutoMapper - selecting properties from an object
+    - SqlModelMapper - generating insert/update SQL statements
+    - Order by method
+    - Rolling your own functions
+        - Performance
+    - Rules engine - create your own query language!
+
+- Weaknesses
+    - Cooking Expressions don't always work like you think they should
+    - Concatenating strings
+    - 
