@@ -14,7 +14,25 @@ ss.zone/expressions
 
 ---
 
+## <span class="orange">Have you ever been asked to:</span>
+* Query a database with a LINQ expression?
+
+---
+
+## <span class="orange">Have you ever been asked to:</span>
+* Select one or more specific members from an object?
+
+---
+
+<span class="orange">Guarantee</span>: you've used expression trees
+
+---
+
 ### What are <span class="orange">expression trees?</span>
+
+---
+
+We should start first by discussing <span class="orange">lambdas</span>
 
 ---
 
@@ -170,17 +188,18 @@ Useful, but mostly for libraries to read them
 
 ---
 
-### <span class="orange">ParameterExpression</span>
+### <span class="orange">`ParameterExpression`</span>
 
 Describes a parameter to a function
 
 ```csharp
 Expression.Parameter(typeof(string));
+Expression.Parameter(typeof(string), "myStr");  //with a name
 ```
 
 ---
 
-### <span class="orange">ConstantExpression</span>
+### <span class="orange">`ConstantExpression`</span>
 
 Represents a constant (e.g. 1, "str", etc)
 
@@ -190,7 +209,7 @@ Expression.Constant("spencer");
 
 ---
 
-### <span class="orange">MethodCallExpression</span>
+### <span class="orange">`MethodCallExpression`</span>
 
 Represents a call to a method
 
@@ -206,11 +225,12 @@ Expression.Call(prm, toUpper);
 ## Let's build this guy!
 
 ```csharp
-Expression<Func<string, string>> toUpper 
-    = str => str.ToUpper();
+Expression<Func<string, string>> toUpper = str => str.ToUpper();
 ```
 
 ---
+
+## `str => str.ToUpper()`
 
 ```csharp
 var prm = Expression.Parameter(typeof(string));
@@ -388,13 +408,19 @@ WHERE Name = 'eggs'
 
 ---
 
-### <span class="orange">BinaryExpression</span>
+```csharp
+p => p.Name == "eggs"   //this is a binary expression
+```
+
+---
+
+### <span class="orange">`BinaryExpression`</span>
 
 Represents an operation with a left side, right side, and operator
 
 ---
 
-### <span class="orange">BinaryExpression</span>
+### <span class="orange">`BinaryExpression`</span>
 
 | Property | What is it? |
 | --- | --- |
@@ -404,13 +430,13 @@ Represents an operation with a left side, right side, and operator
 
 ---
 
-## AutoMapper
+## <span class="orange">AutoMapper</span>
 
 Selectors
 
 ---
 
-## AutoMapper
+## <span class="orange">AutoMapper</span>
 
 ```csharp
 config.CreateMap<Employee, EmployeeModel>()
@@ -419,7 +445,7 @@ config.CreateMap<Employee, EmployeeModel>()
 
 ---
 
-## AutoMapper
+## <span class="orange">AutoMapper</span>
 
 ```csharp
 config.CreateMap<Employee, EmployeeModel>()
@@ -430,7 +456,7 @@ Uses the expressions as selectors
 
 ---
 
-## AutoMapper
+## <span class="orange">AutoMapper</span>
 
 # `ProjectTo`
 
@@ -462,7 +488,7 @@ public class ItemDetailModel
 
 ---
 
-## AutoMapper + EF
+## <span class="orange">AutoMapper</span> + <span class="orange">EF</span>
 
 ```csharp
 var itemDetails = Mapper.Map<ItemDetailModel[]>(db.ItemDetails);
@@ -470,7 +496,7 @@ var itemDetails = Mapper.Map<ItemDetailModel[]>(db.ItemDetails);
 
 ---
 
-## AutoMapper + EF
+## <span class="orange">AutoMapper</span> + <span class="orange">EF</span>
 
 ```csharp
 var itemDetails = Mapper.Map<ItemDetailModel[]>(db.ItemDetails);
@@ -484,7 +510,7 @@ SELECT * FROM ItemDetails
 
 ---
 
-## `ProjectTo` to the rescue
+## <span class="orange">`ProjectTo`</span> to the rescue
 
 ```csharp
 db.ItemDetails.ProjectTo<ItemDetailModel>();
@@ -568,8 +594,10 @@ public class SfCustomerToQbCustomer
 {
     public SfCustomerToQbCustomer()
     {
-        SourceField(sfc => sfc.CustomerName).IsEqualTo(qbc => qbc.Name.Trim());
-        SourceField(sfc => sfc.CreateDate).IsEqualTo(qbc => qbc.OpenDate ?? DateTime.Now);
+        SourceField(sfc => sfc.CustomerName)
+            .IsEqualTo(qbc => qbc.Name.Trim());
+        SourceField(sfc => sfc.CreateDate)
+            .IsEqualTo(qbc => qbc.OpenDate ?? DateTime.Now);
     }
 }
 ```
@@ -631,18 +659,24 @@ db.Customers.OrderBy("Name")    //doesn't exist
 
 ---
 
-## Solution: cook an expression!
+## Solution: cook an <span class="orange">expression</span>!
 
 ---
 
+## Goal
+
 ```csharp
-c => c.Name
+OrderBy(c => c.Name)
 ```
 
 ---
 
 ```csharp
-IQueryable<T> OrderByPropertyOrField<T>(this IQueryable<T> queryable, string propertyOrFieldName, bool ascending)
+IQueryable<T> OrderByPropertyOrField<T>(
+    this IQueryable<T> queryable, 
+    string propertyOrFieldName, 
+    bool ascending
+)
 ```
 
 ---
@@ -652,25 +686,28 @@ IQueryable<T> OrderByPropertyOrField<T>(this IQueryable<T> queryable, string pro
 
 ---
 
-```csharp
-c => c.Name
-```
+## `c => c.Name`
 
 ```csharp
-IQueryable<T> OrderByPropertyOrField<T>(this IQueryable<T> queryable, string propertyOrFieldName, bool ascending)
+IQueryable<T> OrderByPropertyOrField<T>(
+    this IQueryable<T> queryable, 
+    string propertyOrFieldName, 
+    bool ascending
+)
 {
     var elementType = typeof (T);
-    var parameterExpression = Expression.Parameter(elementType);
-    var propertyOrFieldExpression = 
-        Expression.PropertyOrField(parameterExpression, propertyOrFieldName);
-    var selector = Expression.Lambda(propertyOrFieldExpression, parameterExpression);
+    var parameter = Expression.Parameter(elementType);
+    var prop = Expression.PropertyOrField(parameter, propertyOrFieldName);
+    var selector = Expression.Lambda(prop, parameter);
 ```
-@[3]
-@[4]
-@[5-6]
 @[7]
+@[8]
+@[9-10]
+@[11]
 
 ---
+
+## Goal
 
 ```csharp
 OrderBy(c => c.Name)
@@ -678,14 +715,24 @@ OrderBy(c => c.Name)
 
 ---
 
+## `Queryable`
+
 ```csharp
-var selector = Expression.Lambda(propertyOrFieldExpression, parameterExpression);
+Queryable.OrderBy<TSource, TKey>(IQueryable<TSource>, Expression<Func<TSource, TKey>>)
+```
+
+---
+
+## `Queryable.OrderBy<TSource, TKey>(IQueryable<TSource>, Expression<Func<TSource, TKey>>)`
+
+```csharp
+var selector = Expression.Lambda(prop, parameter);
 
 var orderByMethodName = ascending ? "OrderBy" : "OrderByDescending";
 var orderByExpression = Expression.Call(
     typeof (Queryable),     //the type whose function we want to call
     orderByMethodName,      //the name of the method
-    new[] {elementType, propertyOrFieldExpression.Type},    //the generic type signature 
+    new[] {elementType, prop.Type},    //the generic type signature 
     queryable.Expression,   //parameter
     selector);              //parameter
 ```
@@ -701,10 +748,6 @@ var orderByExpression = Expression.Call(
 ## Other things
 * Expressions vs. reflection
 * Rules engine
-
----
-
-
 
 ---
 
