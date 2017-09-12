@@ -3,7 +3,7 @@ Slides + links for my presentation, C# Expression Trees in the Real World
 
 ## Useful Links
 
-### [View Slides](https://gitpitch.com/schneidenbach/RealWorldExpressionTrees)
+### [View Slides](https://gitpitch.com/schneidenbach/CSharpExpressionTreesInTheRealWorld)
 
 ## Presented/Presenting at:
 
