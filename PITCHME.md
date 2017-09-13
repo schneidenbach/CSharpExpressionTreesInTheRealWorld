@@ -204,25 +204,6 @@ Useful, but mostly for libraries to read them
 
 ---
 
-### So what can we do with <span class="orange">expressions</span>?
-
-1. Read them (more on that later)
-2. Create them
-3. **Use them**
-
----
-
-### Use them
-
-```csharp
-Expression<Func<string, string>> toUpper 
-    = str => str.ToUpper();
-
-var result = toUpper.Compile().Invoke("spencer");    //SPENCER
-```
-
----
-
 ## Create them... at runtime?
 
 ---
@@ -290,7 +271,7 @@ Expression<Func<string, string>> toUpper = str => str.ToUpper();
 ## `str => str.ToUpper()`
 
 ```csharp
-var prm = Expression.Parameter(typeof(string));
+var prm = Expression.Parameter(typeof(string), "str");
 var toUpper = typeof(string).GetMethod("ToUpper", Type.EmptyTypes);
 
 var body = Expression.Call(prm, toUpper);
@@ -301,6 +282,14 @@ var lambda = Expression.Lambda(body, prm);
 @[2]
 @[4]
 @[6]
+
+---
+
+### So what can we do with <span class="orange">expressions</span>?
+
+1. Read them (more on that later)
+2. Create them
+3. **Use them**
 
 ---
 
@@ -342,7 +331,7 @@ lambda.Compile().Invoke("spencer");         //strongly typed
 
 ## <span class="orange">Entity Framework</span>
 
-Translates expressions to SQL
+Translates LINQ expressions to SQL
 
 ---
 
