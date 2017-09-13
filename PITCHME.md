@@ -934,7 +934,6 @@ e => (e.Name == "gary") && (e.HireDate > new DateTime(2016, 1, 1))
 
 ## <span class="orange">Other things</span>
 * Expressions vs. reflection
-* Rules engine
 
 ---
 
@@ -986,6 +985,26 @@ This uses string.Concat
 ---
 
 Conversions have to be handled explicitly
+
+---
+
+## HOW TO START
+
+* Experiment
+* LinqPad
+* Google
+
+---
+
+### do what we do best
+
+Use intellisense to discover Expression APIs
+
+---
+
+### Most importantly
+
+# EXPERIMENT!
 
 ---
 
