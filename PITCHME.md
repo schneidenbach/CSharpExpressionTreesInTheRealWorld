@@ -98,16 +98,6 @@ var result = toUpper("spencer");    //doesn't compile!
 
 ---
 
-### Lambda expressions
-
-```csharp
-Expression<Func<string, string>> toUpper = str => str.ToUpper();
-
-var result = toUpper("spencer");    //doesn't compile!
-```
-
----
-
 ## What the heck?
 
 ```csharp
@@ -153,7 +143,7 @@ Expression<Func<string, string>> toUpperExp
 
 ---
 
-### So what can we do with expressions?
+### So what can we do with <span class="orange">expressions</span>?
 
 1. **Read them**
 2. Use them
@@ -186,7 +176,7 @@ Expression<Func<string, string>> toUpper
 
 ---
 
-### So what can we do with it?
+### So what can we do with <span class="orange">expressions</span>?
 
 1. Read them (more on that later)
 2. **Use them**
@@ -205,7 +195,7 @@ var result = toUpper.Compile().Invoke("spencer");    //SPENCER
 
 ---
 
-### So what can we do with it?
+### So what can we do with <span class="orange">expressions</span>?
 
 1. Read them (more on that later)
 2. Use them
@@ -247,7 +237,7 @@ You can build expressions at runtime very easily
 
 ---
 
-## `x => "Hello, " + x.LastName`
+### `x => "Hello, " + x.LastName`
 
 Functions have:
 * Parameters
@@ -257,7 +247,7 @@ Functions have:
 
 ### <span class="orange">`ParameterExpression`</span>
 
-Describes a parameter to a function
+Represents a parameter to a function
 
 ```csharp
 Expression.Parameter(typeof(string));
@@ -332,7 +322,7 @@ lambda.Compile().Invoke("spencer");         //strongly typed
 
 ---
 
-### So what can we do with it?
+### So what can we do with <span class="orange">expressions</span>?
 
 1. Read them
 2. Use them
@@ -344,7 +334,7 @@ lambda.Compile().Invoke("spencer");         //strongly typed
 
 ---
 
-## Your favorite libraries
+## Your <span class="orange">favorite</span> libraries
 * Entity Framework
 * AutoMapper
 
@@ -502,6 +492,22 @@ Represents an operation with a left side, right side, and operator
 
 ---
 
+## <span class="orange">`ExpressionVisitor`</span>
+
+Reads each piece of the expression and operates
+
+---
+
+## `p.Name == "eggs"`
+
+| Part of function | SQL |
+| --- | --- |
+| p.Name | Name |
+| == | = |
+| "eggs" | 'eggs' |
+
+---
+
 ## <span class="orange">AutoMapper</span>
 
 Selectors
@@ -602,18 +608,18 @@ SELECT ID, Name FROM ItemDetails
 
 ---
 
-# My real world
+# My <span class="orange">real world</span>
 
 ---
 
-## SQL Model Mapper
+## <span class="orange">SQL Model Mapper</span>
 
 Needed to map one entity to another  
 Stored procs vs. code
 
 ---
 
-## SQL Model Mapper
+## <span class="orange">SQL Model Mapper</span>
 
 SalesForce Customer -> Quickbooks Customer
 
@@ -657,7 +663,7 @@ Now do that for 100's of object and 1000's of properties, and don't make a mista
 
 ---
 
-## Expressions to the rescue
+## Expressions to the <span class="orange">rescue</span>
 
 ---
 
@@ -676,7 +682,7 @@ public class SfCustomerToQbCustomer
 
 ---
 
-## Tasks
+## <span class="orange">Tasks</span>
 
 1. Write an `ExpressionVisitor`
 2. Handle any type of expression we want to translate
@@ -693,7 +699,17 @@ LTRIM(RTRIM(Name))
 
 ---
 
-Emitted nice looking SQL
+```csharp
+qbc => qbc.CreateDate ?? DateTime.Now
+```
+## to
+```sql
+ISNULL(CreateDate, GETDATE())
+```
+
+---
+
+Emitted nice-looking SQL
 
 ```sql
 INSERT QuickbooksCustomers (Name, OpenDate)
@@ -790,12 +806,14 @@ OrderBy(c => c.Name)
 ## `Queryable`
 
 ```csharp
-Queryable.OrderBy<TSource, TKey>(IQueryable<TSource>, Expression<Func<TSource, TKey>>)
+Queryable.OrderBy<TSource, TKey>(
+    IQueryable<TSource>, 
+    Expression<Func<TSource, TKey>>)
 ```
 
 ---
 
-## `Queryable.OrderBy<TSource, TKey>(IQueryable<TSource>, Expression<Func<TSource, TKey>>)`
+#### `Queryable.OrderBy<TSource, TKey>(IQueryable<TSource>, Expression<Func<TSource, TKey>>)`
 
 ```csharp
 var selector = Expression.Lambda(prop, parameter);
@@ -817,7 +835,7 @@ var orderByExpression = Expression.Call(
 
 ---
 
-## Other things
+## <span class="orange">Other things</span>
 * Expressions vs. reflection
 * Rules engine
 
@@ -827,12 +845,15 @@ var orderByExpression = Expression.Call(
 
 ---
 
-### Remember, C# compiler does magic
+### Remember, C# compiler does <span class="orange">magic</span>
 
 ---
 
 ```csharp
-Expression<Func<string, string, string>> combineStrings = 
+Func<string, string, string> combineStrings = 
+    (str1, str2) => str1 + str2;
+
+Expression<Func<string, string, string>> combineStringsExp = 
     (str1, str2) => str1 + str2;
 ```
 
