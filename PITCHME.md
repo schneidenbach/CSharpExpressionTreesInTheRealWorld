@@ -835,6 +835,98 @@ var orderByExpression = Expression.Call(
 
 ---
 
+## What about your own...
+
+Rules Engine!  
+Search filter system!  
+Whatever...
+
+---
+
+### Define structure for rules/filters
+
+```csharp
+public class Rule
+{
+    public string PropertyName { get; set; }
+    public Operation Operation { get; set; }
+    public object Value { get; set; }
+}
+
+public enum Operation
+{
+    GreaterThan,
+    LessThan,
+    Equal
+}
+```
+
+---
+
+### Employee search criteria
+
+```csharp
+new Rule {
+    PropertyName = "Name",
+    Operation = Operation.Equal,
+    Value = "gary"
+},
+new Rule {
+    PropertyName = "HireDate",
+    Operation = Operation.GreaterThan,
+    Value = new DateTime(2016, 1, 1)
+}
+```
+
+---
+
+### Cook an expression given a rule set
+```csharp
+var parameter = Expression.Parameter(typeof(Employee));
+BinaryExpression binaryExpression = null;
+
+foreach (var rule in rules)
+{
+    var prop = Expression.Property(parameter, rule.PropertyName);
+    var value = Expression.Constant(rule.Value);
+    var newBinary = Expression.MakeBinary(rule.Operation, prop, value);
+
+    binaryExpression = 
+        binaryExpression == null
+        ? newBinary
+        : Expression.MakeBinary(AndAlso, binaryExpression, newBinary);
+}
+```
+
+@[2]
+@[4]
+@[6-8]
+@[10-13]
+
+---
+
+### Instant filter predicate
+
+```csharp
+new Rule {
+    PropertyName = "Name",
+    Operation = Operation.Equal,
+    Value = "gary"
+},
+new Rule {
+    PropertyName = "HireDate",
+    Operation = Operation.GreaterThan,
+    Value = new DateTime(2016, 1, 1)
+}
+```
+### becomes
+```
+```csharp
+e => (e.Name == "gary") && (e.HireDate > new DateTime(2016, 1, 1))
+```
+
+---
+
 ## <span class="orange">Other things</span>
 * Expressions vs. reflection
 * Rules engine
