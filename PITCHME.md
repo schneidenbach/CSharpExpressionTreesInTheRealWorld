@@ -146,8 +146,8 @@ Expression<Func<string, string>> toUpperExp
 ### So what can we do with <span class="orange">expressions</span>?
 
 1. **Read them**
-2. Use them
-3. Create them
+2. Create them
+3. Use them
 
 ---
 
@@ -179,27 +179,8 @@ Expression<Func<string, string>> toUpper
 ### So what can we do with <span class="orange">expressions</span>?
 
 1. Read them (more on that later)
-2. **Use them**
-3. Create them
-
----
-
-### Use them
-
-```csharp
-Expression<Func<string, string>> toUpper 
-    = str => str.ToUpper();
-
-var result = toUpper.Compile().Invoke("spencer");    //SPENCER
-```
-
----
-
-### So what can we do with <span class="orange">expressions</span>?
-
-1. Read them (more on that later)
-2. Use them
-3. **Create them**
+2. **Create them**
+3. Use them
 
 ---
 
@@ -220,6 +201,25 @@ Expression<Func<string, string>> toUpper
 ```
 
 Useful, but mostly for libraries to read them
+
+---
+
+### So what can we do with <span class="orange">expressions</span>?
+
+1. Read them (more on that later)
+2. Create them
+3. **Use them**
+
+---
+
+### Use them
+
+```csharp
+Expression<Func<string, string>> toUpper 
+    = str => str.ToUpper();
+
+var result = toUpper.Compile().Invoke("spencer");    //SPENCER
+```
 
 ---
 
