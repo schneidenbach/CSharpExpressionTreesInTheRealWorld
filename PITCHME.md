@@ -17,14 +17,36 @@ ss.zone/expressions
 ## <span class="orange">Have you ever been asked to:</span>
 * Query a database with a LINQ expression?
 
+```csharp
+from product in db.Products
+where product.Price < 2.55
+select new {
+    product.Name,
+    product.Price
+}
+```
+
 ---
 
 ## <span class="orange">Have you ever been asked to:</span>
 * Select one or more specific members from an object?
 
+```csharp
+ForMember(x => x.Name)
+```
 ---
 
-<span class="orange">Guarantee</span>: you've used expression trees
+<span class="orange">Guarantee</span>: if you've done this
+
+```csharp
+x => x.Name
+```
+
+you've used <span class="orange">expression trees</span>
+
+---
+
+even if you had no idea
 
 ---
 
@@ -59,8 +81,7 @@ var result = toUpper("spencer");    //SPENCER
 ### Lambda expressions
 
 ```csharp
-Expression<Func<string, string>> toUpper 
-    = str => str.ToUpper();
+Expression<Func<string, string>> toUpper = str => str.ToUpper();
 
 var result = toUpper("spencer");
 ```
@@ -70,18 +91,49 @@ var result = toUpper("spencer");
 ### Lambda expressions
 
 ```csharp
-Expression<Func<string, string>> toUpper 
-    = str => str.ToUpper();
+Expression<Func<string, string>> toUpper = str => str.ToUpper();
 
 var result = toUpper("spencer");    //doesn't compile!
 ```
 
 ---
 
+### Lambda expressions
+
+```csharp
+Expression<Func<string, string>> toUpper = str => str.ToUpper();
+
+var result = toUpper("spencer");    //doesn't compile!
+```
+
+---
+
+## What the heck?
+
+```csharp
+Expression<Func<string, string>> toUpper = str => str.ToUpper();
+```
+## vs.
+```csharp
+Func<string, string> toUpper = str => str.ToUpper();
+```
+
+---
+
 ## Key difference
 
-Lambdas do the thing  
-Expressions describe the lambda that does the thing
+<span class="orange">Lambdas</span> do the thing  
+<span class="orange">Expressions</span> describe the lambda that does the thing
+
+---
+
+```csharp
+Func<string, string> toUpper 
+    = str => str.ToUpper();
+
+Expression<Func<string, string>> toUpperExp
+    = str => str.ToUpper();
+```
 
 ---
 
@@ -101,30 +153,11 @@ Expression<Func<string, string>> toUpperExp
 
 ---
 
-### Expressions can be compiled and run
+### So what can we do with expressions?
 
-```csharp
-Expression<Func<string, string>> toUpper 
-    = str => str.ToUpper();
-
-var result = toUpper.Compile().Invoke("spencer");    //SPENCER
-```
-
----
-
-### Lambda expressions
-
-```csharp
-Expression<Func<string, string>> toUpper 
-    = str => str.ToUpper();
-```
-
----
-
-### So what can we do with it?
-
-1. Read them
-2. Create them
+1. **Read them**
+2. Use them
+3. Create them
 
 ---
 
@@ -156,7 +189,27 @@ Expression<Func<string, string>> toUpper
 ### So what can we do with it?
 
 1. Read them (more on that later)
-2. Create them
+2. **Use them**
+3. Create them
+
+---
+
+### Use them
+
+```csharp
+Expression<Func<string, string>> toUpper 
+    = str => str.ToUpper();
+
+var result = toUpper.Compile().Invoke("spencer");    //SPENCER
+```
+
+---
+
+### So what can we do with it?
+
+1. Read them (more on that later)
+2. Use them
+3. **Create them**
 
 ---
 
@@ -185,6 +238,20 @@ Useful, but mostly for libraries to read them
 ---
 
 ## `Expression` API
+
+---
+
+## `Expression` API
+
+You can build expressions at runtime very easily
+
+---
+
+## `x => "Hello, " + x.LastName`
+
+Functions have:
+* Parameters
+* Body
 
 ---
 
@@ -268,7 +335,8 @@ lambda.Compile().Invoke("spencer");         //strongly typed
 ### So what can we do with it?
 
 1. Read them
-2. Create them
+2. Use them
+3. Create them
 
 ---
 
@@ -327,6 +395,10 @@ SELECT * FROM Products
 WHERE Name = 'eggs'
 ORDER BY Price DESC
 ```
+
+---
+
+![It's maaaaagic](assets/magic.gif)
 
 ---
 
