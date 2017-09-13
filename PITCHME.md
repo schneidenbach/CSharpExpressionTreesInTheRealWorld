@@ -497,6 +497,22 @@ Reads each piece of the expression and operates
 
 ---
 
+## <span class="orange">Entity Framework</span>
+
+```csharp
+var products = db.Products
+    .Where(p => p.Name == "eggs")
+    .OrderByDescending(p => p.Price);
+```
+### `ExpressionVisitor`
+```sql
+SELECT * FROM Products
+WHERE Name = 'eggs'
+ORDER BY Price DESC
+```
+
+---
+
 ## <span class="orange">AutoMapper</span>
 
 Selectors
