@@ -29,6 +29,15 @@ select new {
 ---
 
 ## <span class="orange">Have you ever been asked to:</span>
+* Render a field in an ASP.NET application like this:
+
+```csharp
+@Html.EditorFor(e => e.FirstName)
+```
+
+---
+
+## <span class="orange">Have you ever been asked to:</span>
 * Select one or more specific members from an object?
 
 ```csharp
