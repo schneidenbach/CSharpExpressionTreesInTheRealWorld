@@ -1,4 +1,4 @@
 transition : none
 theme : sky
 theme-override : assets/PITCHME.css
-highlight: hybrid
+highlight: github-gist
