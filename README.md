@@ -5,8 +5,14 @@ Slides + links for my presentation, C# Expression Trees in the Real World
 
 ### [View Slides](https://gitpitch.com/schneidenbach/CSharpExpressionTreesInTheRealWorld)
 
+[Rules Engine example](https://dotnetfiddle.net/iobiuW)  
+[Expression Visitor example](https://dotnetfiddle.net/wQMkyd)  
+[Order By Property Name example](https://dotnetfiddle.net/5PlilF)
+
 ## Presented/Presenting at:
 
+NDC Porto 2019  
+NDC Minnesota 2019  
 DevConf.PL 2017  
 ConFoo.CA 2017
 

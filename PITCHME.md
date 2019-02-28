@@ -13,6 +13,8 @@ Twitter [@schneidenbach](https://twitter.com/schneidenbach)
 
 schneids.net
 
+<a href="https://twitter.com/home?status=Slides%20and%20links%20for%20Real%20World%20Expression%20Trees%20in%20C%23%20%23ndcporto%20https%3A//github.com/schneidenbach/CSharpExpressionTreesInTheRealWorld">![Twitter](./assets/twitter.png)</a>
+
 ---
 
 ## <span class="orange">Have you ever been asked to:</span>
@@ -633,7 +635,7 @@ Console.WriteLine(expressed.Compile().DynamicInvoke("the cheese"));
 
 ## [`ToUpper` Example](https://dotnetfiddle.net/wQMkyd)
 
-<a href="https://twitter.com/home?status=ToUpperVisitor%20example%20%23ndcporto%20https%3A//dotnetfiddle.net/wQMkyd">Send to Twitter</a>
+<a href="https://twitter.com/home?status=ToUpperVisitor%20example%20%23ndcporto%20https%3A//dotnetfiddle.net/wQMkyd" target="_blank">![Twitter](./assets/twitter.png)</a>
 
 ---
 
@@ -964,6 +966,12 @@ var orderByExpression = Expression.Call(
 
 ---
 
+## [Order By Property Example](https://dotnetfiddle.net/5PlilF)
+
+<a href="https://twitter.com/home?status=Rules%20engine%20example%20%23ndcporto%20https%3A//dotnetfiddle.net/5PlilF" target="_blank">![Twitter](./assets/twitter.png)</a>
+
+---
+
 ## What about your own...
 
 Rules Engine!  
@@ -1056,8 +1064,14 @@ e => (e.Name == "gary") && (e.HireDate > new DateTime(2016, 1, 1))
 
 ---
 
+## [Rules Engine Example](https://dotnetfiddle.net/iobiuW)
+
+<a href="https://twitter.com/home?status=Rules%20engine%20example%20%23ndcporto%20https%3A//dotnetfiddle.net/iobiuW" target="_blank">![Twitter](./assets/twitter.png)</a>
+
+---
+
 ## <span class="orange">Other things</span>
-* Expressions vs. reflection
+Expressions vs. reflection
 
 ---
 
