@@ -1,4 +1,5 @@
-### C# <span style="color: #e49436">Expression Trees</span> in the <span style="color: #e49436">Real World</span>
+### C# <span style="color: #e49436">Expression Trees</span> in the 
+### <span style="color: #e49436">Real World</span>
 
 #####  Spencer Schneidenbach
 
@@ -10,7 +11,7 @@ Twitter [@schneidenbach](https://twitter.com/schneidenbach)
 
 ## Slides plus more at
 
-ss.zone/expressions
+schneids.net
 
 ---
 
@@ -213,7 +214,7 @@ Useful, but mostly for libraries to read them
 
 ---
 
-## Create them... at runtime?
+## Create them... at <span class="orange">runtime</span>?
 
 ---
 
@@ -522,6 +523,120 @@ ORDER BY Price DESC
 
 ---
 
+### `ExpressionVisitor`
+
+---
+
+```sql
+SELECT 
+[Project1].[downtimeId] AS [downtimeId], 
+CASE WHEN ([Extent12].[downtimeStart] > @p__linq__7) THEN [Extent13].[downtimeStart] ELSE @p__linq__8 END AS [C1], 
+CASE WHEN ([Extent14].[equipmentID] IS NULL) THEN 0 ELSE [Extent15].[equipmentID] END AS [C2], 
+CASE WHEN ([Extent16].[equipmentID] IS NULL) THEN N''Unit Overhead'' ELSE [Extent18].[equipmentCode] END AS [C3], 
+CASE WHEN ( CAST( [Project1].[downtimeEquipmentStart] AS datetime2) > @p__linq__9) THEN  CAST( [Project1].[downtimeEquipmentStart] AS datetime2) ELSE @p__linq__10 END AS [C4], 
+CASE WHEN ( CAST( [Project1].[downtimeEquipmentEnd] AS datetime2) < @p__linq__11) THEN  CAST( [Project1].[downtimeEquipmentEnd] AS datetime2) ELSE @p__linq__12 END AS [C5], 
+CASE WHEN ([Extent19].[standardHourRate] IS NULL) THEN cast(0 as decimal(18)) ELSE [Extent20].[standardHourRate] END AS [C6], 
+CASE WHEN ([Extent21].[equipmentID] IS NULL) THEN 0 ELSE [Filter2].[reportingSequence] END AS [C7]
+FROM                    (SELECT 
+    @p__linq__0 AS [p__linq__0], 
+    [Extent1].[downtimeId] AS [downtimeId], 
+    [Extent1].[equipmentID] AS [equipmentID], 
+    [Extent1].[downtimeEquipmentStart] AS [downtimeEquipmentStart], 
+    [Extent1].[downtimeEquipmentEnd] AS [downtimeEquipmentEnd]
+    FROM [dbo].[DowntimeEquipment] AS [Extent1] ) AS [Project1]
+OUTER APPLY  (SELECT [Extent2].[reportingSequence] AS [reportingSequence]
+    FROM   [dbo].[ProcessUnitEquipment] AS [Extent2]
+    INNER JOIN [dbo].[Downtime] AS [Extent3] ON [Extent3].[equipmentID] = [Extent2].[equipmentID]
+    LEFT OUTER JOIN  (SELECT 
+        [Extent4].[downtimeId] AS [downtimeId]
+        FROM [dbo].[Downtime] AS [Extent4]
+        WHERE [Project1].[downtimeId] = [Extent4].[downtimeId] ) AS [Project2] ON 1 = 1
+    WHERE ([Project1].[downtimeId] = [Extent3].[downtimeId]) AND ([Extent2].[processUnitID] = @p__linq__0) AND (@p__linq__0 IS NOT NULL) ) AS [Filter2]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent5] ON [Project1].[downtimeId] = [Extent5].[downtimeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent6] ON [Project1].[downtimeId] = [Extent6].[downtimeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent7] ON [Project1].[downtimeId] = [Extent7].[downtimeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent8] ON [Project1].[downtimeId] = [Extent8].[downtimeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent9] ON [Project1].[downtimeId] = [Extent9].[downtimeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent10] ON [Project1].[downtimeId] = [Extent10].[downtimeId]
+LEFT OUTER JOIN [dbo].[DownTimeType] AS [Extent11] ON [Extent10].[downTimeTypeId] = [Extent11].[downTimeTypeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent12] ON [Project1].[downtimeId] = [Extent12].[downtimeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent13] ON [Project1].[downtimeId] = [Extent13].[downtimeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent14] ON [Project1].[downtimeId] = [Extent14].[downtimeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent15] ON [Project1].[downtimeId] = [Extent15].[downtimeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent16] ON [Project1].[downtimeId] = [Extent16].[downtimeId]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent17] ON [Project1].[downtimeId] = [Extent17].[downtimeId]
+LEFT OUTER JOIN [dbo].[Equipment] AS [Extent18] ON [Extent17].[equipmentID] = [Extent18].[equipmentID]
+LEFT OUTER JOIN [dbo].[Equipment] AS [Extent19] ON [Project1].[equipmentID] = [Extent19].[equipmentID]
+LEFT OUTER JOIN [dbo].[Equipment] AS [Extent20] ON [Project1].[equipmentID] = [Extent20].[equipmentID]
+LEFT OUTER JOIN [dbo].[Downtime] AS [Extent21] ON [Project1].[downtimeId] = [Extent21].[downtimeId]
+WHERE ([Extent5].[downtimeEnd] >= @p__linq__1) AND ([Extent6].[downtimeStart] < @p__linq__2) AND ([Project1].[downtimeEquipmentStart] < @p__linq__3) AND ([Project1].[downtimeEquipmentEnd] > @p__linq__4) AND ((([Extent7].[processUnitID] = @p__linq__5) AND ( NOT ([Extent8].[processUnitID] IS NULL OR @p__linq__5 IS NULL))) OR (([Extent9].[processUnitID] IS NULL) AND (@p__linq__5 IS NULL))) AND (@p__linq__6 = 1 OR [Extent11].[includeInDowntimeAnalysis] = 1)
+```
+
+---
+
+## <span class="orange">`ExpressionVisitor`</span>
+
+Used to read and operate on expressions
+
+---
+
+## <span class="orange">`ExpressionVisitor`</span>
+
+Used to read and operate on expressions  
+...or even modify them
+
+---
+
+## <span class="orange">`ExpressionVisitor`</span>
+
+Used to read and operate on expressions  
+...or even modify them... kind of
+
+---
+
+```csharp
+public class ToUpperVisitor : ExpressionVisitor
+{
+	public override Expression Visit(Expression node)
+	{
+		if (node.NodeType == ExpressionType.Parameter)
+		{
+			return base.Visit(node);
+		}
+		
+		if (node.Type == typeof(string))
+		{
+			var toUpper = typeof(string).GetMethod("ToUpper", Type.EmptyTypes);
+			var methodCallExpression = Expression.Call(node, toUpper);
+			return methodCallExpression;
+		}
+		return base.Visit(node);
+	}
+}
+```
+
+---
+
+```csharp
+Expression<Func<string, string>> spencyString =
+	s => s + " belongs to Spencer";
+	
+var toUpperVisitor = new ToUpperVisitor();
+var expressed = toUpperVisitor.VisitAndConvert(spencyString, null);
+
+Console.WriteLine(expressed.Compile().DynamicInvoke("the cheese"));
+
+//output: THE CHEESE BELONGS TO SPENCER
+```
+
+---
+
+## [ToUpper Example](https://dotnetfiddle.net/wQMkyd)
+
+<a href="https://twitter.com/home?status=ToUpperVisitor%20example%20%23ndcporto%20https%3A//dotnetfiddle.net/wQMkyd">Send to Twitter</a>
+
+---
+
 ## <span class="orange">AutoMapper</span>
 
 Selectors
@@ -610,7 +725,7 @@ db.ItemDetails.ProjectTo<ItemDetailModel>();
 
 ---
 
-## `ProjectTo` to the rescue
+## <span class="orange">`ProjectTo`</span> to the rescue
 
 ```csharp
 db.ItemDetails.ProjectTo<ItemDetailModel>();
@@ -934,7 +1049,7 @@ new Rule {
 }
 ```
 ### becomes
-```
+
 ```csharp
 e => (e.Name == "gary") && (e.HireDate > new DateTime(2016, 1, 1))
 ```
@@ -1007,19 +1122,13 @@ Conversions have to be handled explicitly
 
 ### do what we do best
 
-Use intellisense to discover Expression APIs
+Use Intellisense to discover Expression APIs
 
 ---
 
 ### Most importantly
 
-# EXPERIMENT!
-
----
-
-### More resources
-
-ss.zone/expressions
+# <span class="orange">EXPERIMENT</span>!
 
 ---
 
