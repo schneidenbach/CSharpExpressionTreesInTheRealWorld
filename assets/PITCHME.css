@@ -14,3 +14,7 @@
 .blue {
     color: #0977a8;
 }
+
+a img {
+    border: 0 !important;
+}
