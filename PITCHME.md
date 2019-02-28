@@ -1,5 +1,5 @@
-### C# <span style="color: #e49436">Expression Trees</span> in the 
-### <span style="color: #e49436">Real World</span>
+### C# <span style="color: #e49436">Expression Trees</span> 
+#### in the <span style="color: #e49436">Real World</span>
 
 #####  Spencer Schneidenbach
 
@@ -123,7 +123,7 @@ Func<string, string> toUpper = str => str.ToUpper();
 ## Key difference
 
 <span class="orange">Lambdas</span> do the thing  
-<span class="orange">Expressions</span> describe the lambda that does the thing
+<span class="orange">Expressions</span> <u>describe</u> the lambda that does the thing
 
 ---
 
@@ -631,7 +631,7 @@ Console.WriteLine(expressed.Compile().DynamicInvoke("the cheese"));
 
 ---
 
-## [ToUpper Example](https://dotnetfiddle.net/wQMkyd)
+## [`ToUpper` Example](https://dotnetfiddle.net/wQMkyd)
 
 <a href="https://twitter.com/home?status=ToUpperVisitor%20example%20%23ndcporto%20https%3A//dotnetfiddle.net/wQMkyd">Send to Twitter</a>
 
