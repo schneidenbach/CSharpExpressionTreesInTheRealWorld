@@ -11,6 +11,8 @@ Slides + links for my presentation, C# Expression Trees in the Real World
 
 ## Presented/Presenting at:
 
+Update Conference Prague 2022  
+Kansas City Developer Conference 2021  
 NDC Porto 2019  
 NDC Minnesota 2019  
 DevConf.PL 2017  
