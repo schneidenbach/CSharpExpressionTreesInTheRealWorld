@@ -13,6 +13,7 @@ Slides + links for my presentation, C# Expression Trees in the Real World
 
 ## Presented at:
 
+Hot Topics Developer Group September 2024  
 SDD Conference London 2024  
 Update Conference Prague 2022  
 Kansas City Developer Conference 2021  
