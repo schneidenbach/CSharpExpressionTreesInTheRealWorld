@@ -3,7 +3,7 @@ Slides + links for my presentation, C# Expression Trees in the Real World
 
 ## Useful Links
 
-### [View Slides](https://gitpitch.com/schneidenbach/CSharpExpressionTreesInTheRealWorld)
+### [View Slides](slides.pdf)
 
 [Rules Engine example](https://dotnetfiddle.net/iobiuW)  
 [Even more complex rules engine example](https://dotnetfiddle.net/XuF4ci)  
